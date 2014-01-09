@@ -77,8 +77,8 @@ module OpenID
         OpenidAssociation.find_in_batches(batch_size: 500) do |group|
           oas = group.collect do |oa|
             oa.id if build_association(oa).expires_in == 0
-          end
-          OpenidAssociation.delete oas.compact
+          end.compact
+          OpenidAssociation.delete(oas) unless oas.blank?
         end
       end
 
@@ -89,8 +89,8 @@ module OpenID
       def cleanup_nonces
         now = Time.now.to_i
         OpenidNonce.find_in_batches(batch_size: 500) do |nonces|
-          ids = nonces.collect { |n| n.id if (n.timestamp - now).abs > Nonce.skew }
-          OpenidNonce.delete ids.compact
+          ids = nonces.collect { |n| n.id if (n.timestamp - now).abs > Nonce.skew }.compact
+          OpenidNonce.delete(ids) unless ids.blank?
         end
       end
 
