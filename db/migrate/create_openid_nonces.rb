@@ -9,7 +9,7 @@ class CreateOpenidNonces < ActiveRecord::Migration
       t.timestamps
     end
     
-    add_index :openid_nonces, [:target, :timestamp], :name => 'for_existence_lookups'
+    add_index :openid_nonces, [:target, :timestamp], :name => 'openid_nonces_existence_lookups'
   end
 
   def self.down

@@ -14,7 +14,7 @@ class CreateOpenidAssociations < ActiveRecord::Migration
       t.timestamps
     end
     
-    add_index :openid_associations, [:target], :name => 'for_lookups_by_target'
+    add_index :openid_associations, [:target], :name => 'openid_associations_by_target'
   end
 
   def self.down
