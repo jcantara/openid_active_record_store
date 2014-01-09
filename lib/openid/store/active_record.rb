@@ -74,10 +74,12 @@ module OpenID
       # Not called during normal library operation, this method is for store
       # admins to keep their storage from filling up with expired data
       def cleanup_associations
-        oas = OpenidAssociation.all.collect do |oa|
-          oa.id if build_association(oa).expires_in == 0
+        OpenidAssociation.find_in_batches(batch_size: 500) do |group|
+          oas = group.collect do |oa|
+            oa.id if build_association(oa).expires_in == 0
+          end
+          OpenidAssociation.delete oas.compact
         end
-        OpenidAssociation.delete oas.compact
       end
 
       # Remove expired nonces from the store
@@ -86,9 +88,10 @@ module OpenID
       # admins to keep their storage from filling up with expired data
       def cleanup_nonces
         now = Time.now.to_i
-        nonces = OpenidNonce.all
-        ids = nonces.collect { |n| n.id if (n.timestamp - now).abs > Nonce.skew }
-        OpenidNonce.delete ids.compact
+        OpenidNonce.find_in_batches(batch_size: 500) do |nonces|
+          ids = nonces.collect { |n| n.id if (n.timestamp - now).abs > Nonce.skew }
+          OpenidNonce.delete ids.compact
+        end
       end
 
       private
