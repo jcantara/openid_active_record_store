@@ -20,7 +20,7 @@ module OpenID
           :issued_at  => association.issued,
           :lifetime   => association.lifetime,
           :assoc_type => association.assoc_type
-          }, :as => :lib)
+          })
         true
       end
 
@@ -114,8 +114,8 @@ module OpenID
         OpenidNonce.create!({
           :target     => targetize(server_url),
           :server_url => server_url,
-          :timestamp  => timestamp}, 
-        :as => :lib)
+          :timestamp  => timestamp}
+        )
         true
       end
 

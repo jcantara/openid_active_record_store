@@ -1,12 +1,12 @@
 PATH
   remote: .
   specs:
-    openid_active_record_store (1.0.1)
-      activerecord (~> 3)
-      ruby-openid (~> 2.2)
+    openid_active_record_store (1.0.3)
+      activerecord (>= 3)
+      ruby-openid (>= 2.2)
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     actionmailer (3.2.11)
       actionpack (= 3.2.11)
@@ -75,7 +75,7 @@ GEM
     rake (10.0.3)
     rdoc (3.12)
       json (~> 1.4)
-    ruby-openid (2.2.2)
+    ruby-openid (2.5.0)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -92,6 +92,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  mysql2 (~> 0.3)
+  mysql2 (>= 0.3)
   openid_active_record_store!
-  rails (~> 3)
+  rails (>= 3)
